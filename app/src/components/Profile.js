@@ -108,6 +108,8 @@ const AIPersona = ({ setPersonaList, setMintSuccess }) => {
   const [mintLoading, setMintLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0); // If your API provides this information
 
+  const { aiPersonaLoading } = useContext(DataContext);
+
   const wallet_address = sessionStorage.getItem("token");
 
   const fetchAIPersona = async (page) => {
@@ -210,6 +212,10 @@ const AIPersona = ({ setPersonaList, setMintSuccess }) => {
                   </div>
                 );
               })
+            ) : aiPersonaLoading ? (
+              <div className="w-full  text-[30px] text-center mt-4 bg-gradient-to-r from-[#c084fc40] to-[#db277747] p-10 py-28 rounded-3xl">
+                Hang On..., We are building your personas.
+              </div>
             ) : (
               <div className="w-full  text-[30px] text-center mt-4 bg-gradient-to-r from-[#c084fc40] to-[#db277747] p-10 py-28 rounded-3xl">
                 No Persona Found
@@ -369,12 +375,9 @@ const Profile = () => {
     router.push("/");
   };
 
-
   return (
     <>
-      {mintSuccess ? (
-        <Confetti width={width} height={height} />
-      ) : null}
+      {mintSuccess ? <Confetti width={width} height={height} /> : null}
 
       <Sidebar
         handleSelectAvatar={handleSelectAvatar}
